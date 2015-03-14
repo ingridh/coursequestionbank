@@ -6,7 +6,9 @@ Saasquizes::Application.routes.draw do
   post 'logout' => 'sessions#destroy'
   get  'auth/failure' => 'sessions#failure'
   get 'login' => 'sessions#login', :as => 'login'
-  match 'upload' => 'upload#index', :as => 'upload'
+  get 'upload' => 'upload#index', :as => 'upload'
+  post 'upload' => 'upload#upload', :as => 'upload'
+  
   
   resources :problems
 
