@@ -1,9 +1,6 @@
-class InstructorController < ApplicationController	
-	def new 
-		render(:file => File.join(Rails.root, 'app/views/403.html'), :status => 403, :layout => false)
-	end
+class InstructorController < ApplicationController
 
-	def show
-		@instructor = Instructor.find(params[:id]) 
-	end 
+def new 
+	render(:file => File.join(Rails.root, 'app/views/403.html'), :status => 403, :layout => false)
+end
 end
