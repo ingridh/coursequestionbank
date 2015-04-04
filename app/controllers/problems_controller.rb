@@ -12,4 +12,8 @@ class ProblemsController < ApplicationController
       @collections = Collection.collections_for_user(@current_user)
 	end
 
+  def add_to_collection
+    render json: {:html => "<p>I'm the markup</p>"}
+  end
+    
 end
