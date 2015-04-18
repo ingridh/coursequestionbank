@@ -288,3 +288,10 @@ end
 Then /^show me the page$/ do
   save_and_open_page
 end
+
+
+When(/^I export "(.*?)"$/) do |collection|
+  collection = Collection.find_by_name(collection).id
+  visit "/export?id=#{collection}"
+end
+
