@@ -41,7 +41,7 @@ When /^(.*) within (.*[^:]):$/ do |step, parent, table_or_string|
   with_scope(parent) { When "#{step}:", table_or_string }
 end
 
-Then /^(?:|I )should see(.*) '(.*)' in the database$/ do |datatype, name_value| 
+Then /^(?:|I )should see (.*) '(.*)' in the database$/ do |datatype, name_value| 
   data_class = Object.const_get(datatype)
   assert data_class.find_by_name(name_value) #check this exists in database and is not nil
 end
@@ -54,6 +54,27 @@ Given /^(?:|I )have uploaded '(.*)'$/ do |file|
     Then I should see "Quiz successfully uploaded"
   }
 end
+
+When /^(?:|I )create a new collection '(.*)'(.*)/ do |name, optional|
+  steps %Q{
+    Given I am on the dashboard
+    And I follow "start a new collection"
+    And I fill in "collection_name" with "#{name}"
+    And I press "Create Collection"
+  }
+  if optional.strip == 'and mark it as current'
+    visit mark_as_current_path(:id => Collection.find_by_name(name).id)
+  end
+end
+
+When /^(?:|I )add problem containing '(.*)' to collection '(.*)'/ do |problem_text, collection|
+  problem = Problem.all.select{|problem| problem.json.include? problem_text}[0].id
+  collection = Collection.find_by_name(collection).id
+  visit "/add_problem?collection_id=#{collection}&id=#{problem}"
+end
+
+
+
 
 
 Given /^(?:|I )am on (.+)$/ do |page_name|
@@ -267,3 +288,10 @@ end
 Then /^show me the page$/ do
   save_and_open_page
 end
+
+
+When(/^I export "(.*?)"$/) do |collection|
+  collection = Collection.find_by_name(collection).id
+  visit "/export?id=#{collection}"
+end
+
