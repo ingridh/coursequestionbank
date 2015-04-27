@@ -1,6 +1,10 @@
 class RuqlReader
   def self.store_as_json(user, file)
-    filename = file.path
+    unless file.nil?
+      Quiz.instance_eval "#{IO.read(filename)}"
+    else
+      raise "Please select a file"
+    end
     Quiz.nuke_from_orbit
     Quiz.instance_eval "#{IO.read(filename)}"
     collections = []
