@@ -2,19 +2,26 @@
   = "Your quiz was successfully uploaded! We found #{@collections.size} collections in your quiz. Review them below here:"
 
 
-%div.col-md-10
+%div.col-md-12
   %div.table-responsive
     %table.table.table-striped#problems
       %thead
         %tr
       %tbody
         -@collections.each do |collection|
-          %tr
-            =render :partial=> 'form', locals: {collection: collection, :remote => true}
-            %p 
-              Delete this collection? 
-              =link_to 'trash_can_icon', collection_path(collection), method: :delete, :confirm => 'Delete this collection?'
-            %p 
-              Export this collection: 
-              =link_to 'export button', export_path(:id => collection) 
-            = render :partial => "shared/problems_table", locals: {problems_index: false, collection: collection, problems: collection.problems}
+          %div.col-md-12{:style=>"margin-top: 50;"}
+            %div.table-responsive
+              %table.table.table-striped#problems
+                %thead
+                  %tr
+                    =render :partial=> 'form', locals: {collection: collection, :remote => true}
+                    %p 
+                      Delete this collection? 
+                      =link_to 'trash_can_icon', collection_path(collection), method: :delete, :confirm => 'Delete this collection?'
+                    %p 
+                      Export this collection: 
+                      =link_to 'export button', export_path(:id => collection) 
+
+                    = render :partial => "shared/problems_table", locals: {problems_index: false, collection: collection, problems: collection.problems}
+          
+
